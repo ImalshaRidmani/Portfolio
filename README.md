@@ -19,7 +19,7 @@ Portfolio/
 ├── styles.css          # CSS styles and animations
 ├── script.js           # JavaScript functionality
 ├── image.jpg           # Your profile image
-├── IMALSHA_RIDMANI.pdf # Your resume
+├── CV.pdf              # Your resume
 └── README.md           # This file
 ```
 
