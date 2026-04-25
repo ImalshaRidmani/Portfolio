@@ -7,17 +7,6 @@
     <meta name="keywords" content="Imalsha Sirigampala, Full Stack Developer, Software Engineer, Web Development, React, Node.js, JavaScript, Portfolio">
     <meta name="author" content="Imalsha Sirigampala">
     
-    <!-- Open Graph / Facebook -->
-    <meta property="og:type" content="website">
-    <meta property="og:title" content="Imalsha Sirigampala - Full Stack Developer">
-    <meta property="og:description" content="Full Stack Developer & Software Engineer. Passionate about creating innovative solutions.">
-    <meta property="og:image" content="https://placehold.co/1200x630">
-    
-    <!-- Twitter -->
-    <meta property="twitter:card" content="summary_large_image">
-    <meta property="twitter:title" content="Imalsha Sirigampala - Full Stack Developer">
-    <meta property="twitter:description" content="Full Stack Developer & Software Engineer.">
-    
     <title>Imalsha Sirigampala | Full Stack Developer</title>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;14..32,400;14..32,500;14..32,600;14..32,700;14..32,800&display=swap" rel="stylesheet">
@@ -36,6 +25,7 @@
             line-height: 1.5;
             transition: background-color 0.3s ease, color 0.3s ease;
             scroll-behavior: smooth;
+            overflow-x: hidden;
         }
 
         /* Dark Mode */
@@ -63,7 +53,6 @@
             color: #e2e8f0;
         }
 
-        body.dark-mode .skill-card,
         body.dark-mode .timeline-card,
         body.dark-mode .contact-item {
             background: rgba(30, 30, 50, 0.7);
@@ -76,10 +65,6 @@
             background-color: #1e1e2e;
             border-color: #334155;
             color: #f1f5f9;
-        }
-
-        body.dark-mode .footer {
-            border-top-color: #1e293b;
         }
 
         .container {
@@ -128,11 +113,23 @@
             text-decoration: none;
             font-weight: 500;
             color: #1f2937;
-            transition: color 0.2s;
+            transition: all 0.3s;
+            position: relative;
         }
 
-        .nav-link:hover {
-            color: #7c3aed;
+        .nav-link::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: linear-gradient(135deg, #7c3aed, #c084fc);
+            transition: width 0.3s;
+        }
+
+        .nav-link:hover::after {
+            width: 100%;
         }
 
         .nav-controls {
@@ -147,7 +144,7 @@
             font-size: 1.3rem;
             cursor: pointer;
             color: #4b5563;
-            transition: transform 0.2s;
+            transition: all 0.3s;
             width: 40px;
             height: 40px;
             border-radius: 50%;
@@ -158,7 +155,7 @@
 
         .theme-toggle:hover {
             background: rgba(0,0,0,0.05);
-            transform: scale(1.05);
+            transform: rotate(15deg) scale(1.1);
         }
 
         body.dark-mode .theme-toggle {
@@ -190,7 +187,7 @@
             transition: 0.3s;
         }
 
-        /* Hero */
+        /* Hero Section */
         .hero {
             padding: 8rem 0 5rem;
             min-height: 100vh;
@@ -210,6 +207,18 @@
 
         .hero-content {
             flex: 1;
+            animation: fadeInUp 1s ease;
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
         }
 
         .hero-subtitle {
@@ -242,14 +251,17 @@
             margin-bottom: 0.8rem;
             color: #4b5563;
         }
-        body.dark-mode .hero-description {
-            color: #cbd5e1;
+
+        .typed-text {
+            display: inline-block;
+            border-right: 3px solid #7c3aed;
+            animation: blink 0.75s step-end infinite;
+            padding-right: 5px;
         }
 
-        .hero-tagline {
-            font-size: 1rem;
-            color: #6b7280;
-            margin-bottom: 2rem;
+        @keyframes blink {
+            from, to { border-color: transparent; }
+            50% { border-color: #7c3aed; }
         }
 
         .hero-buttons {
@@ -264,7 +276,7 @@
             border-radius: 40px;
             font-weight: 600;
             text-decoration: none;
-            transition: all 0.2s;
+            transition: all 0.3s;
             font-size: 0.9rem;
         }
 
@@ -285,20 +297,13 @@
             background: transparent;
             color: #7c3aed;
         }
-        body.dark-mode .btn-secondary {
-            color: #c084fc;
-            border-color: #c084fc;
-        }
-        .btn-secondary:hover {
-            background: #7c3aed10;
-            transform: translateY(-2px);
-        }
 
         .hero-image {
             flex: 1;
             display: flex;
             justify-content: center;
         }
+
         .profile-image {
             width: 320px;
             height: 320px;
@@ -307,126 +312,275 @@
             background: linear-gradient(135deg, #7c3aed20, #a855f720);
             padding: 0.5rem;
             box-shadow: 0 25px 40px -12px rgba(0,0,0,0.2);
+            transition: all 0.3s;
+        }
+
+        /* Timeline - Alternating Left/Right Layout */
+        .timeline {
+            padding: 5rem 0;
+            background: #faf9ff;
+            position: relative;
+        }
+
+        body.dark-mode .timeline {
+            background: #0f0f1a;
+        }
+
+        .timeline-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem;
+            position: relative;
+        }
+
+        /* Vertical line in the middle */
+        .timeline-container::before {
+            content: '';
+            position: absolute;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 3px;
+            height: 100%;
+            background: linear-gradient(to bottom, #7c3aed, #c084fc, #7c3aed);
+            border-radius: 3px;
+        }
+
+        /* Timeline items */
+        .timeline-wrapper {
+            position: relative;
+            margin-bottom: 3rem;
+        }
+
+        .timeline-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 3rem;
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 0.6s ease;
+        }
+
+        .timeline-item.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* Left side items */
+        .timeline-item.left .timeline-card {
+            margin-right: auto;
+            margin-left: 0;
+            text-align: right;
+        }
+
+        .timeline-item.left .timeline-content-wrapper {
+            order: 1;
+            width: 45%;
+        }
+
+        .timeline-item.left .timeline-dot-wrapper {
+            order: 2;
+            width: 10%;
+            display: flex;
+            justify-content: center;
+        }
+
+        .timeline-item.left .timeline-spacer {
+            order: 3;
+            width: 45%;
+        }
+
+        /* Right side items */
+        .timeline-item.right .timeline-spacer {
+            order: 1;
+            width: 45%;
+        }
+
+        .timeline-item.right .timeline-dot-wrapper {
+            order: 2;
+            width: 10%;
+            display: flex;
+            justify-content: center;
+        }
+
+        .timeline-item.right .timeline-content-wrapper {
+            order: 3;
+            width: 45%;
+        }
+
+        .timeline-item.right .timeline-card {
+            margin-left: auto;
+            margin-right: 0;
+            text-align: left;
+        }
+
+        /* Dot styling */
+        .timeline-dot {
+            width: 20px;
+            height: 20px;
+            background: #7c3aed;
+            border-radius: 50%;
+            border: 3px solid white;
+            box-shadow: 0 0 0 4px rgba(124,58,237,0.2);
+            transition: all 0.3s;
+            position: relative;
+            z-index: 2;
+        }
+
+        .timeline-item:hover .timeline-dot {
+            transform: scale(1.3);
+            background: #a855f7;
+            box-shadow: 0 0 0 6px rgba(124,58,237,0.3);
+        }
+
+        /* Card styling */
+        .timeline-card {
+            background: white;
+            padding: 1.5rem 2rem;
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.05);
+            transition: all 0.3s;
+            position: relative;
+            cursor: pointer;
+        }
+
+        .timeline-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 40px rgba(124,58,237,0.15);
+        }
+
+        body.dark-mode .timeline-card {
+            background: #1e1e2e;
+        }
+
+        .timeline-card h3 {
+            font-size: 1.25rem;
+            margin-bottom: 0.5rem;
+            color: #7c3aed;
+        }
+
+        .timeline-card p {
+            color: #6b7280;
+            margin-bottom: 0.5rem;
+        }
+
+        body.dark-mode .timeline-card p {
+            color: #9ca3af;
+        }
+
+        .timeline-year {
+            display: inline-block;
+            padding: 0.25rem 0.75rem;
+            background: linear-gradient(135deg, #7c3aed20, #a855f720);
+            border-radius: 20px;
+            font-size: 0.75rem;
+            font-weight: 600;
+            color: #7c3aed;
+        }
+
+        /* Arrow indicators for cards */
+        .timeline-item.left .timeline-card::before {
+            content: '';
+            position: absolute;
+            right: -10px;
+            top: 20px;
+            width: 0;
+            height: 0;
+            border-top: 10px solid transparent;
+            border-bottom: 10px solid transparent;
+            border-left: 10px solid white;
+        }
+
+        body.dark-mode .timeline-item.left .timeline-card::before {
+            border-left-color: #1e1e2e;
+        }
+
+        .timeline-item.right .timeline-card::before {
+            content: '';
+            position: absolute;
+            left: -10px;
+            top: 20px;
+            width: 0;
+            height: 0;
+            border-top: 10px solid transparent;
+            border-bottom: 10px solid transparent;
+            border-right: 10px solid white;
+        }
+
+        body.dark-mode .timeline-item.right .timeline-card::before {
+            border-right-color: #1e1e2e;
         }
 
         /* Section common */
         section {
             padding: 5rem 0;
         }
+
         .section-header {
             text-align: center;
             margin-bottom: 3rem;
         }
+
         .section-header h2 {
             font-size: 2.5rem;
             font-weight: 700;
             margin-bottom: 1rem;
-        }
-        .section-header p {
-            color: #6b7280;
-            max-width: 600px;
-            margin: 0 auto;
-        }
-        body.dark-mode .section-header p {
-            color: #9ca3af;
+            position: relative;
+            display: inline-block;
         }
 
-        /* About */
+        .section-header h2::after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 50px;
+            height: 3px;
+            background: linear-gradient(135deg, #7c3aed, #a855f7);
+            border-radius: 3px;
+        }
+
+        /* About Section */
         .about-content {
             display: flex;
             gap: 3rem;
             align-items: center;
             flex-wrap: wrap;
         }
+
         .about-text {
             flex: 2;
         }
+
         .about-text p {
             margin-bottom: 1rem;
             font-size: 1.05rem;
         }
+
         .about-stats {
             flex: 1;
             display: flex;
             gap: 2rem;
             justify-content: center;
         }
+
         .stat-item {
             text-align: center;
             background: #f8fafc;
             padding: 1.5rem;
             border-radius: 24px;
             min-width: 120px;
+            transition: all 0.3s;
         }
+
         body.dark-mode .stat-item {
             background: #1e1e2e;
         }
+
         .stat-item h3 {
             font-size: 2.2rem;
             color: #7c3aed;
-        }
-        .stat-item p {
-            font-weight: 500;
-        }
-
-        /* Timeline */
-        .timeline {
-            background: #faf9ff;
-        }
-        body.dark-mode .timeline {
-            background: #0f0f1a;
-        }
-        .timeline-content {
-            position: relative;
-            max-width: 900px;
-            margin: 0 auto;
-            padding: 1rem 0;
-        }
-        .timeline-content::before {
-            content: '';
-            position: absolute;
-            left: 20px;
-            top: 0;
-            height: 100%;
-            width: 2px;
-            background: linear-gradient(to bottom, #7c3aed, #c084fc);
-        }
-        .timeline-item {
-            position: relative;
-            padding-left: 55px;
-            margin-bottom: 2.5rem;
-        }
-        .timeline-dot {
-            position: absolute;
-            left: 12px;
-            top: 8px;
-            width: 16px;
-            height: 16px;
-            background: #7c3aed;
-            border-radius: 50%;
-            border: 3px solid white;
-            box-shadow: 0 0 0 3px #7c3aed30;
-        }
-        .timeline-card {
-            background: white;
-            padding: 1.4rem 2rem;
-            border-radius: 20px;
-            box-shadow: 0 5px 20px rgba(0,0,0,0.03);
-            transition: 0.2s;
-        }
-        body.dark-mode .timeline-card {
-            background: #1e1e2e;
-        }
-        .timeline-card h3 {
-            font-size: 1.25rem;
-            margin-bottom: 0.3rem;
-        }
-        .timeline-year {
-            display: inline-block;
-            margin-top: 0.6rem;
-            font-size: 0.8rem;
-            color: #7c3aed;
-            font-weight: 600;
         }
 
         /* Work Section */
@@ -435,16 +589,31 @@
             grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
             gap: 2rem;
         }
+
         .project-card {
             background: #ffffff;
             border-radius: 24px;
             overflow: hidden;
             box-shadow: 0 10px 25px -5px rgba(0,0,0,0.05);
-            transition: 0.2s;
+            transition: all 0.4s;
+            opacity: 0;
+            transform: translateY(30px);
         }
+
+        .project-card.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .project-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 40px rgba(124,58,237,0.15);
+        }
+
         body.dark-mode .project-card {
             background: #14141f;
         }
+
         .project-placeholder {
             height: 200px;
             background: linear-gradient(135deg, #e2e8f0, #f1f5f9);
@@ -454,18 +623,18 @@
             font-size: 3rem;
             color: #7c3aed;
         }
-        body.dark-mode .project-placeholder {
-            background: #25253a;
-        }
+
         .project-content {
             padding: 1.5rem;
         }
+
         .project-tech {
             display: flex;
             flex-wrap: wrap;
             gap: 0.6rem;
             margin: 1rem 0;
         }
+
         .project-tech span {
             background: #eef2ff;
             padding: 0.2rem 0.8rem;
@@ -473,70 +642,85 @@
             font-size: 0.75rem;
             font-weight: 500;
         }
-        body.dark-mode .project-tech span {
-            background: #2d2d44;
-            color: #cbd5e1;
-        }
+
         .project-links {
             display: flex;
             gap: 1.2rem;
         }
+
         .project-link {
             text-decoration: none;
             font-weight: 600;
             color: #7c3aed;
             font-size: 0.85rem;
+            transition: all 0.3s;
         }
 
-        /* Skills */
+        .project-link:hover {
+            transform: translateX(5px);
+        }
+
+        /* Skills Section */
         .skills-grid {
             display: grid;
             grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
             gap: 1.5rem;
         }
+
         .skill-item {
             background: #f8fafc;
             padding: 0.8rem 1.2rem;
             border-radius: 16px;
+            opacity: 0;
+            transform: translateX(-20px);
+            transition: all 0.5s ease;
         }
+
+        .skill-item.visible {
+            opacity: 1;
+            transform: translateX(0);
+        }
+
         body.dark-mode .skill-item {
             background: #1e1e2e;
         }
+
         .skill-header {
             display: flex;
             justify-content: space-between;
             margin-bottom: 0.5rem;
             font-weight: 600;
         }
+
         .skill-bar {
             height: 8px;
             background: #e2e8f0;
             border-radius: 10px;
             overflow: hidden;
         }
-        body.dark-mode .skill-bar {
-            background: #2d3748;
-        }
+
         .skill-progress {
             height: 100%;
             background: linear-gradient(90deg, #7c3aed, #a855f7);
             border-radius: 10px;
             width: 0%;
-            transition: width 0.6s ease;
+            transition: width 1s ease;
         }
 
-        /* Contact */
+        /* Contact Section */
         .contact-content {
             display: flex;
             gap: 3rem;
             flex-wrap: wrap;
         }
+
         .contact-info {
             flex: 1;
             display: flex;
             flex-direction: column;
             gap: 2rem;
         }
+
         .contact-item {
             display: flex;
             align-items: center;
@@ -544,20 +728,27 @@
             background: #f9fafb;
             padding: 1.2rem;
             border-radius: 24px;
+            transition: all 0.3s;
+            cursor: pointer;
         }
-        body.dark-mode .contact-item {
-            background: #14141f;
+
+        .contact-item:hover {
+            transform: translateX(10px);
         }
+
         .contact-item i {
             font-size: 2rem;
             color: #7c3aed;
         }
+
         .contact-form {
             flex: 1.5;
         }
+
         .form-group {
             margin-bottom: 1.2rem;
         }
+
         .form-group input, .form-group textarea {
             width: 100%;
             padding: 1rem;
@@ -565,8 +756,9 @@
             border: 1px solid #e2e8f0;
             background: white;
             font-family: inherit;
-            transition: 0.2s;
+            transition: all 0.3s;
         }
+
         .form-group input:focus, .form-group textarea:focus {
             outline: none;
             border-color: #7c3aed;
@@ -579,72 +771,85 @@
             border-top: 1px solid #edf2f7;
             text-align: center;
         }
+
         .social-links {
             display: flex;
             justify-content: center;
             gap: 1.5rem;
             margin-top: 1rem;
         }
+
         .social-links a {
             color: #4b5563;
             font-size: 1.3rem;
-            transition: color 0.2s;
+            transition: all 0.3s;
         }
+
         .social-links a:hover {
             color: #7c3aed;
-        }
-        body.dark-mode .social-links a {
-            color: #a0aec0;
+            transform: translateY(-5px);
         }
 
         /* Responsive */
-        @media (max-width: 850px) {
-            .nav-menu {
-                position: fixed;
-                left: -100%;
-                top: 70px;
+        @media (max-width: 768px) {
+            .timeline-container::before {
+                left: 20px;
+            }
+
+            .timeline-item {
                 flex-direction: column;
-                background: white;
-                width: 80%;
-                text-align: center;
-                transition: 0.3s;
-                box-shadow: 0 10px 20px rgba(0,0,0,0.05);
-                padding: 2rem;
-                gap: 1.8rem;
-                border-radius: 0 20px 20px 0;
+                align-items: flex-start;
+                margin-bottom: 2rem;
             }
-            body.dark-mode .nav-menu {
-                background: #0f0f1a;
-                border-right: 1px solid #2d2d44;
+
+            .timeline-item.left .timeline-content-wrapper,
+            .timeline-item.right .timeline-content-wrapper,
+            .timeline-item.left .timeline-spacer,
+            .timeline-item.right .timeline-spacer {
+                width: 100%;
             }
-            .nav-menu.active {
-                left: 0;
+
+            .timeline-item.left .timeline-dot-wrapper,
+            .timeline-item.right .timeline-dot-wrapper {
+                width: auto;
+                position: absolute;
+                left: 12px;
+                top: 0;
             }
-            .hamburger {
-                display: flex;
+
+            .timeline-item.left .timeline-card,
+            .timeline-item.right .timeline-card {
+                margin-left: 45px;
+                margin-right: 0;
+                text-align: left;
             }
+
+            .timeline-item.left .timeline-card::before,
+            .timeline-item.right .timeline-card::before {
+                left: -10px;
+                right: auto;
+                border-right: 10px solid white;
+                border-left: none;
+            }
+
+            body.dark-mode .timeline-item.left .timeline-card::before,
+            body.dark-mode .timeline-item.right .timeline-card::before {
+                border-right-color: #1e1e2e;
+            }
+
             .hero-container {
                 flex-direction: column-reverse;
                 text-align: center;
             }
+
             .hero-title {
                 font-size: 2.5rem;
             }
+
             .hero-buttons {
                 justify-content: center;
             }
-            .about-content {
-                flex-direction: column;
-            }
-            .timeline-content::before {
-                left: 12px;
-            }
-            .timeline-item {
-                padding-left: 40px;
-            }
-            .timeline-dot {
-                left: 4px;
-            }
+
             .profile-image {
                 width: 250px;
                 height: 250px;
@@ -659,6 +864,7 @@
             <ul class="nav-menu">
                 <li><a href="#home" class="nav-link">Home</a></li>
                 <li><a href="#about" class="nav-link">About</a></li>
+                <li><a href="#timeline" class="nav-link">Journey</a></li>
                 <li><a href="#work" class="nav-link">Work</a></li>
                 <li><a href="#skills" class="nav-link">Skills</a></li>
                 <li><a href="#contact" class="nav-link">Contact</a></li>
@@ -685,15 +891,17 @@
                     <span class="gradient-text">Imalsha</span><br>
                     <span class="gradient-text">Sirigampala</span>
                 </h1>
-                <p class="hero-description">Full Stack Developer & Software Engineer</p>
+                <p class="hero-description">
+                    <span class="typed-text" id="typed-text"></span>
+                </p>
                 <p class="hero-tagline">Crafting digital experiences with cutting-edge technologies and creative problem-solving</p>
                 <div class="hero-buttons">
                     <a href="#contact" class="btn btn-primary">Get In Touch</a>
-                    <a href="#" class="btn btn-secondary" id="fakeResumeBtn">Download Resume</a>
+                    <a href="#" class="btn btn-secondary" id="resumeBtn">Download Resume</a>
                 </div>
             </div>
             <div class="hero-image">
-                <img src="image.jpg" alt="Imalsha Sirigampala" class="profile-image">
+                <img src="image.jpg" alt="Imalsha Sirigampala" class="profile-image" onerror="this.src='https://placehold.co/400x400/EEE/7c3aed?text=Imalsha'">
             </div>
         </div>
     </section>
@@ -717,14 +925,90 @@
         </div>
     </section>
 
-    <section class="timeline">
+    <!-- Timeline Section with Alternating Left/Right Layout -->
+    <section id="timeline" class="timeline">
         <div class="container">
-            <div class="timeline-content">
-                <div class="timeline-item"><div class="timeline-dot"></div><div class="timeline-card"><h3>Advanced Level in Commerce stream</h3><p>Yasodara Vidyalaya, Colombo</p><span class="timeline-year">2019</span></div></div>
-                <div class="timeline-item"><div class="timeline-dot"></div><div class="timeline-card"><h3>Passed Finalist</h3><p>AAT SriLanka</p><span class="timeline-year">2017 - 2021</span></div></div>
-                <div class="timeline-item"><div class="timeline-dot"></div><div class="timeline-card"><h3>Started BSc IT Journey</h3><p>SLIIT - Information Technology specialization</p><span class="timeline-year">2021 - 2025</span></div></div>
-                <div class="timeline-item"><div class="timeline-dot"></div><div class="timeline-card"><h3>Software Developer Internship</h3><p>Management Systems (PVT) Ltd.</p><span class="timeline-year">2024</span></div></div>
-                <div class="timeline-item"><div class="timeline-dot"></div><div class="timeline-card"><h3>Junior Software Developer</h3><p>Promoted to Junior Software Developer role</p><span class="timeline-year">2025</span></div></div>
+            <div class="section-header">
+                <h2>My Journey</h2>
+                <p>The path that shaped my career and passion for technology</p>
+            </div>
+        </div>
+        <div class="timeline-container">
+            <div class="timeline-wrapper">
+                <!-- Item 1 - Left -->
+                <div class="timeline-item left" data-side="left">
+                    <div class="timeline-content-wrapper">
+                        <div class="timeline-card">
+                            <h3>🎓 Advanced Level in Commerce stream</h3>
+                            <p>Yasodara Vidyalaya, Colombo</p>
+                            <span class="timeline-year">2019</span>
+                        </div>
+                    </div>
+                    <div class="timeline-dot-wrapper">
+                        <div class="timeline-dot"></div>
+                    </div>
+                    <div class="timeline-spacer"></div>
+                </div>
+
+                <!-- Item 2 - Right -->
+                <div class="timeline-item right" data-side="right">
+                    <div class="timeline-spacer"></div>
+                    <div class="timeline-dot-wrapper">
+                        <div class="timeline-dot"></div>
+                    </div>
+                    <div class="timeline-content-wrapper">
+                        <div class="timeline-card">
+                            <h3>📊 Passed Finalist</h3>
+                            <p>AAT Sri Lanka - Accounting Technician Qualification</p>
+                            <span class="timeline-year">2017 - 2021</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Item 3 - Left -->
+                <div class="timeline-item left" data-side="left">
+                    <div class="timeline-content-wrapper">
+                        <div class="timeline-card">
+                            <h3>💻 Started BSc IT Journey</h3>
+                            <p>SLIIT - Information Technology specialization</p>
+                            <span class="timeline-year">2021 - 2025</span>
+                        </div>
+                    </div>
+                    <div class="timeline-dot-wrapper">
+                        <div class="timeline-dot"></div>
+                    </div>
+                    <div class="timeline-spacer"></div>
+                </div>
+
+                <!-- Item 4 - Right -->
+                <div class="timeline-item right" data-side="right">
+                    <div class="timeline-spacer"></div>
+                    <div class="timeline-dot-wrapper">
+                        <div class="timeline-dot"></div>
+                    </div>
+                    <div class="timeline-content-wrapper">
+                        <div class="timeline-card">
+                            <h3>🚀 Software Developer Internship</h3>
+                            <p>Management Systems (PVT) Ltd.</p>
+                            <span class="timeline-year">2024</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Item 5 - Left -->
+                <div class="timeline-item left" data-side="left">
+                    <div class="timeline-content-wrapper">
+                        <div class="timeline-card">
+                            <h3>⭐ Junior Software Developer</h3>
+                            <p>Promoted to Junior Software Developer role at Management Systems (PVT) Ltd.</p>
+                            <span class="timeline-year">2025 - Present</span>
+                        </div>
+                    </div>
+                    <div class="timeline-dot-wrapper">
+                        <div class="timeline-dot"></div>
+                    </div>
+                    <div class="timeline-spacer"></div>
+                </div>
             </div>
         </div>
     </section>
@@ -771,18 +1055,18 @@
         <div class="container">
             <div class="section-header"><h2>Skills & Expertise</h2><p>Technologies I master to bring ideas to life</p></div>
             <div class="skills-grid">
-                <div class="skill-item"><div class="skill-header"><h3>JavaScript</h3><span>90%</span></div><div class="skill-bar"><div class="skill-progress" style="width:90%"></div></div></div>
-                <div class="skill-item"><div class="skill-header"><h3>React</h3><span>85%</span></div><div class="skill-bar"><div class="skill-progress" style="width:85%"></div></div></div>
-                <div class="skill-item"><div class="skill-header"><h3>Python</h3><span>80%</span></div><div class="skill-bar"><div class="skill-progress" style="width:80%"></div></div></div>
-                <div class="skill-item"><div class="skill-header"><h3>Node.js</h3><span>75%</span></div><div class="skill-bar"><div class="skill-progress" style="width:75%"></div></div></div>
-                <div class="skill-item"><div class="skill-header"><h3>HTML/CSS</h3><span>95%</span></div><div class="skill-bar"><div class="skill-progress" style="width:95%"></div></div></div>
-                <div class="skill-item"><div class="skill-header"><h3>Git</h3><span>85%</span></div><div class="skill-bar"><div class="skill-progress" style="width:85%"></div></div></div>
-                <div class="skill-item"><div class="skill-header"><h3>C#</h3><span>85%</span></div><div class="skill-bar"><div class="skill-progress" style="width:85%"></div></div></div>
-                <div class="skill-item"><div class="skill-header"><h3>Crystal Reports</h3><span>90%</span></div><div class="skill-bar"><div class="skill-progress" style="width:90%"></div></div></div>
-                <div class="skill-item"><div class="skill-header"><h3>Oracle</h3><span>85%</span></div><div class="skill-bar"><div class="skill-progress" style="width:85%"></div></div></div>
-                <div class="skill-item"><div class="skill-header"><h3>MongoDB</h3><span>85%</span></div><div class="skill-bar"><div class="skill-progress" style="width:85%"></div></div></div>
-                <div class="skill-item"><div class="skill-header"><h3>.NET</h3><span>80%</span></div><div class="skill-bar"><div class="skill-progress" style="width:80%"></div></div></div>
-                <div class="skill-item"><div class="skill-header"><h3>Figma</h3><span>85%</span></div><div class="skill-bar"><div class="skill-progress" style="width:85%"></div></div></div>
+                <div class="skill-item"><div class="skill-header"><h3>JavaScript</h3><span>90%</span></div><div class="skill-bar"><div class="skill-progress" data-width="90%"></div></div></div>
+                <div class="skill-item"><div class="skill-header"><h3>React</h3><span>85%</span></div><div class="skill-bar"><div class="skill-progress" data-width="85%"></div></div></div>
+                <div class="skill-item"><div class="skill-header"><h3>Python</h3><span>80%</span></div><div class="skill-bar"><div class="skill-progress" data-width="80%"></div></div></div>
+                <div class="skill-item"><div class="skill-header"><h3>Node.js</h3><span>75%</span></div><div class="skill-bar"><div class="skill-progress" data-width="75%"></div></div></div>
+                <div class="skill-item"><div class="skill-header"><h3>HTML/CSS</h3><span>95%</span></div><div class="skill-bar"><div class="skill-progress" data-width="95%"></div></div></div>
+                <div class="skill-item"><div class="skill-header"><h3>Git</h3><span>85%</span></div><div class="skill-bar"><div class="skill-progress" data-width="85%"></div></div></div>
+                <div class="skill-item"><div class="skill-header"><h3>C#</h3><span>85%</span></div><div class="skill-bar"><div class="skill-progress" data-width="85%"></div></div></div>
+                <div class="skill-item"><div class="skill-header"><h3>Crystal Reports</h3><span>90%</span></div><div class="skill-bar"><div class="skill-progress" data-width="90%"></div></div></div>
+                <div class="skill-item"><div class="skill-header"><h3>Oracle</h3><span>85%</span></div><div class="skill-bar"><div class="skill-progress" data-width="85%"></div></div></div>
+                <div class="skill-item"><div class="skill-header"><h3>MongoDB</h3><span>85%</span></div><div class="skill-bar"><div class="skill-progress" data-width="85%"></div></div></div>
+                <div class="skill-item"><div class="skill-header"><h3>.NET</h3><span>80%</span></div><div class="skill-bar"><div class="skill-progress" data-width="80%"></div></div></div>
+                <div class="skill-item"><div class="skill-header"><h3>Figma</h3><span>85%</span></div><div class="skill-bar"><div class="skill-progress" data-width="85%"></div></div></div>
             </div>
         </div>
     </section>
@@ -822,6 +1106,43 @@
     </footer>
 
     <script>
+        // Typing animation
+        const roles = ['Full Stack Developer', 'Software Engineer', 'Problem Solver', 'Tech Enthusiast'];
+        let roleIndex = 0;
+        let charIndex = 0;
+        let isDeleting = false;
+        const typedTextElement = document.getElementById('typed-text');
+
+        function typeEffect() {
+            const currentRole = roles[roleIndex];
+            
+            if (isDeleting) {
+                typedTextElement.textContent = currentRole.substring(0, charIndex - 1);
+                charIndex--;
+            } else {
+                typedTextElement.textContent = currentRole.substring(0, charIndex + 1);
+                charIndex++;
+            }
+            
+            if (!isDeleting && charIndex === currentRole.length) {
+                isDeleting = true;
+                setTimeout(typeEffect, 2000);
+                return;
+            }
+            
+            if (isDeleting && charIndex === 0) {
+                isDeleting = false;
+                roleIndex = (roleIndex + 1) % roles.length;
+                setTimeout(typeEffect, 500);
+                return;
+            }
+            
+            const speed = isDeleting ? 50 : 100;
+            setTimeout(typeEffect, speed);
+        }
+
+        typeEffect();
+
         // Dark mode toggle
         const themeToggle = document.getElementById('theme-toggle');
         const body = document.body;
@@ -837,35 +1158,64 @@
         const hamburger = document.getElementById('hamburger');
         const navMenu = document.querySelector('.nav-menu');
         hamburger.addEventListener('click', () => {
+            hamburger.classList.toggle('active');
             navMenu.classList.toggle('active');
         });
         document.querySelectorAll('.nav-link').forEach(link => {
-            link.addEventListener('click', () => navMenu.classList.remove('active'));
-        });
-
-        // Smooth scroll for anchor links
-        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-            anchor.addEventListener('click', function(e) {
-                const href = this.getAttribute('href');
-                if (href === "#" || href === "") return;
-                const target = document.querySelector(href);
-                if (target) {
-                    e.preventDefault();
-                    target.scrollIntoView({ behavior: 'smooth' });
-                }
+            link.addEventListener('click', () => {
+                hamburger.classList.remove('active');
+                navMenu.classList.remove('active');
             });
         });
 
-        // fake resume download (prevent error, alert)
-        const resumeBtn = document.getElementById('fakeResumeBtn');
+        // Scroll reveal for timeline items
+        const observerOptions = {
+            threshold: 0.2,
+            rootMargin: '0px'
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                }
+            });
+        }, observerOptions);
+
+        // Observe timeline items, project cards, and skill items
+        document.querySelectorAll('.timeline-item, .project-card, .skill-item').forEach(el => {
+            observer.observe(el);
+        });
+
+        // Skill bar animation on scroll
+        const skillObserver = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    const progressBar = entry.target.querySelector('.skill-progress');
+                    if (progressBar && !progressBar.style.width) {
+                        const width = progressBar.getAttribute('data-width');
+                        setTimeout(() => {
+                            progressBar.style.width = width;
+                        }, 200);
+                    }
+                }
+            });
+        }, { threshold: 0.3 });
+
+        document.querySelectorAll('.skill-item').forEach(el => {
+            skillObserver.observe(el);
+        });
+
+        // Resume download
+        const resumeBtn = document.getElementById('resumeBtn');
         if(resumeBtn) {
             resumeBtn.addEventListener('click', (e) => {
                 e.preventDefault();
-                alert("📄 Resume download demo: 'IMALSHA_RIDMANI.pdf' would be downloaded. (Add actual file to enable)");
+                alert("📄 Resume download: 'IMALSHA_RIDMANI.pdf' (Demo - Add actual file)");
             });
         }
 
-        // Contact form simulation (no external submit)
+        // Contact form
         const contactForm = document.getElementById('contactForm');
         const feedback = document.getElementById('formFeedback');
         if(contactForm) {
@@ -874,6 +1224,7 @@
                 const name = document.getElementById('nameInput')?.value.trim();
                 const email = document.getElementById('emailInput')?.value.trim();
                 const msg = document.getElementById('msgInput')?.value.trim();
+                
                 if(name && email && msg) {
                     feedback.innerHTML = "✅ Thanks for reaching out! I'll get back to you soon.";
                     feedback.style.color = "#10b981";
@@ -885,17 +1236,6 @@
                 }
             });
         }
-
-        // subtle skill bar animation on view (already set widths inline)
-        const animateSkills = () => {
-            const skillBars = document.querySelectorAll('.skill-progress');
-            skillBars.forEach(bar => {
-                const width = bar.style.width;
-                bar.style.width = "0%";
-                setTimeout(() => { bar.style.width = width; }, 100);
-            });
-        };
-        window.addEventListener('load', animateSkills);
     </script>
 </body>
 </html>
