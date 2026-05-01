@@ -1009,6 +1009,12 @@ body {
     box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
 }
 
+.project-image {
+    width: 100%;
+    height: 200px;
+    object-fit: cover;
+    border-radius: 10px 10px 0 0;
+} 
 /* Better mobile touch targets */
 @media (max-width: 768px) {
     .nav-link {
