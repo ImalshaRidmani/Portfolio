@@ -8,3 +8,121 @@
 .portrait-frame img { display: block; width: 100%; height: 100%; object-fit: cover; object-position: center 28%; }
 [data-theme=dark] .portrait-frame { border-color: #263c2c; }
 @media(max-width:850px) { .portrait-frame { width: 195px; height: 215px; } }
+
+.hero-art {
+    height: 460px;
+    padding: 30px;
+    border-radius: 190px 190px 12px 12px;
+    background: radial-gradient(ellipse at 50% 47%, #d2ddca 0 34%, transparent 34.3%), linear-gradient(150deg, #e8eddf, #dce5d6);
+    box-shadow: inset 0 0 0 1px #ffffff66;
+}
+
+.hero-art::before {
+    position: absolute;
+    top: 67px;
+    left: 50%;
+    width: 310px;
+    height: 310px;
+    border: 1px solid #9cad92a8;
+    border-radius: 50%;
+    content: "";
+    transform: translateX(-50%);
+}
+
+.art-top {
+    z-index: 1;
+    margin-top: 0;
+    font-weight: 700;
+}
+
+.portrait-frame {
+    z-index: 1;
+    width: 275px;
+    height: 305px;
+    border: 6px solid #f8f8f2;
+    border-radius: 150px 150px 12px 12px;
+    box-shadow: 0 20px 50px #263c2c2b;
+}
+
+.portrait-frame img {
+    object-position: center 24%;
+}
+
+.art-bottom {
+    z-index: 1;
+    font-size: 11px;
+    letter-spacing: 1px;
+}
+
+.art-bottom p {
+    line-height: 1.8;
+}
+
+.art-bottom strong {
+    font-size: 9px;
+    letter-spacing: .5px;
+}
+
+.floating {
+    z-index: 2;
+    top: auto;
+    right: 12px;
+    bottom: 105px;
+    padding: 11px 15px;
+    transform: rotate(-5deg);
+}
+
+[data-theme=dark] .hero-art {
+    background: radial-gradient(ellipse at 50% 47%, #405442 0 34%, transparent 34.3%), linear-gradient(150deg, #344535, #293d30);
+    box-shadow: inset 0 0 0 1px #ffffff16;
+}
+
+[data-theme=dark] .hero-art::before {
+    border-color: #9cad9270;
+}
+
+[data-theme=dark] .portrait-frame {
+    border-color: #263c2c;
+}
+
+@media(max-width:850px) {
+    .hero-art {
+        height: 405px;
+    }
+
+    .hero-art::before {
+        top: 58px;
+        width: 270px;
+        height: 270px;
+    }
+
+    .portrait-frame {
+        width: 230px;
+        height: 255px;
+    }
+}
+
+@media(max-width:600px) {
+    .hero-art {
+        height: 390px;
+        padding: 25px;
+    }
+
+    .hero-art::before {
+        top: 52px;
+        width: 250px;
+        height: 250px;
+    }
+
+    .portrait-frame {
+        width: 215px;
+        height: 240px;
+    }
+
+    .floating {
+        right: 4px;
+        bottom: 93px;
+        padding: 9px 11px;
+        font-size: 10px;
+    }
+}
