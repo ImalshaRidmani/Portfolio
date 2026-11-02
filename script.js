@@ -1,1 +1,108 @@
-const root=document.documentElement;const theme=document.querySelector('#theme');let saved;try{saved=localStorage.getItem('portfolio-theme')}catch{}if(saved==='dark')root.dataset.theme='dark';function label(){theme.setAttribute('aria-label',`Switch to ${root.dataset.theme==='dark'?'light':'dark'} theme`)}label();theme.addEventListener('click',()=>{root.dataset.theme=root.dataset.theme==='dark'?'light':'dark';try{localStorage.setItem('portfolio-theme',root.dataset.theme)}catch{}label()});const menu=document.querySelector('#menu'),nav=document.querySelector('#navigation');function closeMenu(){nav.classList.remove('open');menu.setAttribute('aria-expanded','false');menu.setAttribute('aria-label','Open navigation')}menu.addEventListener('click',()=>{const open=nav.classList.toggle('open');menu.setAttribute('aria-expanded',String(open));menu.setAttribute('aria-label',open?'Close navigation':'Open navigation')});nav.addEventListener('click',e=>{if(e.target.closest('a'))closeMenu()});document.addEventListener('keydown',e=>{if(e.key==='Escape'){closeMenu();menu.focus()}});document.querySelectorAll('[data-filter]').forEach(button=>button.addEventListener('click',()=>{document.querySelectorAll('[data-filter]').forEach(b=>{b.classList.toggle('selected',b===button);b.setAttribute('aria-pressed',String(b===button))});document.querySelectorAll('[data-category]').forEach(p=>{p.hidden=button.dataset.filter!=='all'&&p.dataset.category!==button.dataset.filter})}));document.querySelector('#year').textContent=new Date().getFullYear();
+const root = document.documentElement;
+const themeButton = document.querySelector("#theme");
+const menuButton = document.querySelector("#menu");
+const navigation = document.querySelector("#navigation");
+
+function updateThemeLabel() {
+    const nextTheme = root.dataset.theme === "dark" ? "light" : "dark";
+    themeButton.setAttribute("aria-label", `Switch to ${nextTheme} theme`);
+}
+
+try {
+    if (localStorage.getItem("portfolio-theme") === "dark") {
+        root.dataset.theme = "dark";
+    }
+} catch {
+    // The theme toggle remains usable when browser storage is unavailable.
+}
+
+updateThemeLabel();
+
+themeButton.addEventListener("click", () => {
+    root.dataset.theme = root.dataset.theme === "dark" ? "light" : "dark";
+
+    try {
+        localStorage.setItem("portfolio-theme", root.dataset.theme);
+    } catch {
+        // Keep the selected theme for this page even when it cannot be persisted.
+    }
+
+    updateThemeLabel();
+});
+
+function closeMenu() {
+    navigation.classList.remove("open");
+    menuButton.setAttribute("aria-expanded", "false");
+    menuButton.setAttribute("aria-label", "Open navigation");
+}
+
+menuButton.addEventListener("click", () => {
+    const isOpen = navigation.classList.toggle("open");
+    menuButton.setAttribute("aria-expanded", String(isOpen));
+    menuButton.setAttribute(
+        "aria-label",
+        isOpen ? "Close navigation" : "Open navigation",
+    );
+});
+
+navigation.addEventListener("click", (event) => {
+    if (event.target.closest("a")) {
+        closeMenu();
+    }
+});
+
+document.addEventListener("keydown", (event) => {
+    if (event.key === "Escape" && navigation.classList.contains("open")) {
+        closeMenu();
+        menuButton.focus();
+    }
+});
+
+const filterButtons = document.querySelectorAll("[data-filter]");
+const projects = document.querySelectorAll("[data-category]");
+
+filterButtons.forEach((button) => {
+    button.addEventListener("click", () => {
+        filterButtons.forEach((filterButton) => {
+            const isSelected = filterButton === button;
+            filterButton.classList.toggle("selected", isSelected);
+            filterButton.setAttribute("aria-pressed", String(isSelected));
+        });
+
+        projects.forEach((project) => {
+            const matchesFilter =
+                button.dataset.filter === "all" ||
+                project.dataset.category === button.dataset.filter;
+            project.hidden = !matchesFilter;
+        });
+    });
+});
+
+const year = document.querySelector("#year");
+year.textContent = new Date().getFullYear();
+
+const prefersReducedMotion = window.matchMedia(
+    "(prefers-reduced-motion: reduce)",
+).matches;
+
+if (!prefersReducedMotion && "IntersectionObserver" in window) {
+    const revealTargets = document.querySelectorAll(
+        ".hero > div, .hero-art, .hero-foot, .project, .role, .about-grid > div, .contact .wrap",
+    );
+    const revealObserver = new IntersectionObserver(
+        (entries, observer) => {
+            entries.forEach((entry) => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add("is-visible");
+                    observer.unobserve(entry.target);
+                }
+            });
+        },
+        { threshold: 0.12 },
+    );
+
+    revealTargets.forEach((target) => {
+        target.classList.add("scroll-reveal");
+        revealObserver.observe(target);
+    });
+}
