@@ -101,8 +101,69 @@ if (!prefersReducedMotion && "IntersectionObserver" in window) {
         { threshold: 0.12 },
     );
 
-    revealTargets.forEach((target) => {
+    revealTargets.forEach((target, index) => {
+        const group = target.parentElement;
+        const siblings = [...group.children].filter((child) =>
+            child.matches(".project, .role"),
+        );
+        const stagger = siblings.includes(target)
+            ? siblings.indexOf(target)
+            : index % 2;
+        target.style.setProperty("--reveal-delay", `${stagger * 100}ms`);
         target.classList.add("scroll-reveal");
         revealObserver.observe(target);
     });
+
+    const scrollProgress = document.createElement("div");
+    scrollProgress.className = "scroll-progress";
+    scrollProgress.setAttribute("aria-hidden", "true");
+    document.body.append(scrollProgress);
+
+    let progressFrame = 0;
+    const updateScrollProgress = () => {
+        if (progressFrame) {
+            return;
+        }
+
+        progressFrame = window.requestAnimationFrame(() => {
+            const scrollableHeight =
+                document.documentElement.scrollHeight - window.innerHeight;
+            const progress =
+                scrollableHeight > 0 ? window.scrollY / scrollableHeight : 0;
+            scrollProgress.style.transform = `scaleX(${Math.min(progress, 1)})`;
+            progressFrame = 0;
+        });
+    };
+
+    window.addEventListener("scroll", updateScrollProgress, { passive: true });
+    window.addEventListener("resize", updateScrollProgress);
+    updateScrollProgress();
+
+    const heroArt = document.querySelector(".hero-art");
+    const portrait = document.querySelector(".portrait-frame");
+    const finePointer = window.matchMedia(
+        "(hover: hover) and (pointer: fine)",
+    ).matches;
+
+    if (heroArt && portrait && finePointer) {
+        heroArt.addEventListener("pointermove", (event) => {
+            const bounds = heroArt.getBoundingClientRect();
+            const horizontal = (event.clientX - bounds.left) / bounds.width - 0.5;
+            const vertical = (event.clientY - bounds.top) / bounds.height - 0.5;
+
+            portrait.style.setProperty(
+                "--portrait-x",
+                `${(horizontal * 8).toFixed(1)}px`,
+            );
+            portrait.style.setProperty(
+                "--portrait-y",
+                `${(vertical * 8).toFixed(1)}px`,
+            );
+        });
+
+        heroArt.addEventListener("pointerleave", () => {
+            portrait.style.setProperty("--portrait-x", "0px");
+            portrait.style.setProperty("--portrait-y", "0px");
+        });
+    }
 }
