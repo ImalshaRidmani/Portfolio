@@ -81,6 +81,60 @@ filterButtons.forEach((button) => {
 const year = document.querySelector("#year");
 year.textContent = new Date().getFullYear();
 
+const contactForm = document.querySelector(".contact-form");
+
+contactForm.addEventListener("submit", async (event) => {
+    event.preventDefault();
+
+    const formStatus = contactForm.querySelector(".form-status");
+    const submitButton = contactForm.querySelector(".contact-submit");
+    const endpoint = contactForm.action;
+
+    formStatus.replaceChildren();
+    formStatus.classList.remove("is-error");
+
+    if (endpoint.includes("YOUR_FORM_ID")) {
+        formStatus.classList.add("is-error");
+        formStatus.append(
+            document.createTextNode(
+                "The contact form isn’t connected yet. Email me at ",
+            ),
+        );
+        const emailLink = document.createElement("a");
+        emailLink.href = "mailto:imalsharidmani07@gmail.com";
+        emailLink.textContent = "imalsharidmani07@gmail.com";
+        formStatus.append(emailLink, document.createTextNode("."));
+        return;
+    }
+
+    submitButton.disabled = true;
+    submitButton.textContent = "Sending…";
+    formStatus.textContent = "Sending your message…";
+
+    try {
+        const response = await fetch(endpoint, {
+            method: "POST",
+            body: new FormData(contactForm),
+            headers: { Accept: "application/json" },
+        });
+
+        if (!response.ok) {
+            throw new Error(`Contact form request failed (${response.status}).`);
+        }
+
+        contactForm.reset();
+        formStatus.textContent = "Thanks for your message. I’ll be in touch soon.";
+    } catch (error) {
+        formStatus.classList.add("is-error");
+        formStatus.textContent =
+            "Your message couldn’t be sent. Please email me at imalsharidmani07@gmail.com.";
+        console.error("Contact form submission failed:", error);
+    } finally {
+        submitButton.disabled = false;
+        submitButton.innerHTML = 'Send message <span aria-hidden="true">↗</span>';
+    }
+});
+
 const prefersReducedMotion = window.matchMedia(
     "(prefers-reduced-motion: reduce)",
 ).matches;

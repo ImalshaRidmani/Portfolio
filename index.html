@@ -206,15 +206,29 @@
             </div>
         </section>
         <section id="contact" class="contact">
-            <div class="wrap">
-                <p class="eyebrow">04 / LET’S CONNECT</p>
-                <h2>Have a role in mind?<br><em>Let’s talk.</em></h2>
-                <p>I’m interested in software engineering opportunities where I can contribute my C#/.NET and SQL
-                    experience while growing as a developer.</p><a class="email"
-                    href="mailto:imalsharidmani07@gmail.com">imalsharidmani07@gmail.com ↗</a>
-                <div class="contact-links"><a href="https://www.linkedin.com/in/imalsha-ridmani-699a72217/">LinkedIn
-                        ↗</a><a href="https://github.com/ImalshaRidmani">GitHub ↗</a><a href="tel:+94785850863">+94 78
-                        585 0863</a></div>
+            <div class="wrap contact-grid">
+                <div class="contact-copy">
+                    <p class="eyebrow">04 / LET’S CONNECT</p>
+                    <h2>Have a role in mind?<br><em>Let’s talk.</em></h2>
+                    <p>I’m interested in software engineering opportunities where I can contribute my C#/.NET and SQL
+                        experience while growing as a developer.</p>
+                    <a class="email" href="mailto:imalsharidmani07@gmail.com">imalsharidmani07@gmail.com ↗</a>
+                    <div class="contact-links"><a href="https://www.linkedin.com/in/imalsha-ridmani-699a72217/">LinkedIn
+                            ↗</a><a href="https://github.com/ImalshaRidmani">GitHub ↗</a><a href="tel:+94785850863">+94 78
+                            585 0863</a></div>
+                </div>
+                <form class="contact-form" action="https://formspree.io/f/YOUR_FORM_ID" method="POST">
+                    <input type="text" name="_gotcha" class="contact-honeypot" tabindex="-1" autocomplete="off"
+                        aria-hidden="true">
+                    <label for="contact-name">Your name</label>
+                    <input id="contact-name" name="name" type="text" autocomplete="name" maxlength="100" required>
+                    <label for="contact-email">Email address</label>
+                    <input id="contact-email" name="email" type="email" autocomplete="email" maxlength="254" required>
+                    <label for="contact-message">Message</label>
+                    <textarea id="contact-message" name="message" rows="5" maxlength="5000" required></textarea>
+                    <button class="contact-submit" type="submit">Send message <span aria-hidden="true">↗</span></button>
+                    <p class="form-status" role="status" aria-live="polite"></p>
+                </form>
             </div>
         </section>
     </main>

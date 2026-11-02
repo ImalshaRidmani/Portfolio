@@ -312,3 +312,140 @@ footer > a:last-child {
         transition: none;
     }
 }
+
+.contact-grid {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) minmax(280px, 0.85fr);
+    gap: 64px;
+    align-items: center;
+}
+
+.contact-copy > p:not(.eyebrow) {
+    max-width: 520px;
+    font-size: 14px;
+    color: #e0e5dc;
+    margin: 25px 0;
+}
+
+.contact-form {
+    display: grid;
+    gap: 10px;
+    padding: 28px;
+    border: 1px solid rgb(255 255 255 / 18%);
+    border-radius: 12px;
+    background: rgb(255 255 255 / 7%);
+    box-shadow: 0 20px 50px rgb(15 29 21 / 15%);
+}
+
+.contact-form label {
+    margin-top: 5px;
+    color: #f2f3ec;
+    font-size: 12px;
+    font-weight: 600;
+}
+
+.contact-form input:not(.contact-honeypot),
+.contact-form textarea {
+    width: 100%;
+    padding: 12px 14px;
+    border: 1px solid rgb(255 255 255 / 24%);
+    border-radius: 6px;
+    background: rgb(15 29 21 / 20%);
+    color: #fff;
+    font: inherit;
+}
+
+.contact-form textarea {
+    min-height: 130px;
+    resize: vertical;
+}
+
+.contact-form input:focus,
+.contact-form textarea:focus {
+    border-color: #edbd89;
+    outline: 2px solid #edbd89;
+    outline-offset: 2px;
+}
+
+.contact-form input::placeholder,
+.contact-form textarea::placeholder {
+    color: #c9d1c7;
+}
+
+.contact-honeypot {
+    position: absolute;
+    left: -10000px;
+}
+
+.contact-submit {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 24px;
+    margin-top: 8px;
+    padding: 13px 16px;
+    border: 0;
+    border-radius: 6px;
+    background: #edbd89;
+    color: #263b2f;
+    font: inherit;
+    font-size: 13px;
+    font-weight: 700;
+    transition: background-color 180ms ease, transform 180ms ease;
+}
+
+.contact-submit:hover:not(:disabled) {
+    background: #f4cda1;
+    transform: translateY(-2px);
+}
+
+.contact-submit:disabled {
+    cursor: wait;
+    opacity: .7;
+}
+
+.form-status {
+    min-height: 1.6em;
+    margin: 4px 0 0;
+    color: #f2f3ec;
+    font-size: 12px;
+    overflow-wrap: anywhere;
+}
+
+.form-status a {
+    color: #edbd89;
+    text-decoration: underline;
+    text-underline-offset: 3px;
+}
+
+.form-status.is-error {
+    color: #ffd2be;
+}
+
+@media(max-width:850px) {
+    .contact-grid {
+        grid-template-columns: 1fr 1fr;
+        gap: 32px;
+    }
+
+    .contact-form {
+        padding: 22px;
+    }
+}
+
+@media(max-width:600px) {
+    .contact-grid {
+        grid-template-columns: 1fr;
+        gap: 32px;
+    }
+
+    .contact-form {
+        padding: 20px;
+    }
+}
+
+@media(prefers-reduced-motion:reduce) {
+    .contact-submit {
+        transition: none;
+    }
+}
